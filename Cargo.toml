@@ -1,0 +1,48 @@
+[package]
+name = "rustyweb"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+description = "A minimal, Express-style web framework: simple routing, simple middleware."
+authors = ["Rakesh Bisht <raks.bisht@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/raksbisht/rustyweb"
+documentation = "https://docs.rs/rustyweb"
+readme = "README.md"
+keywords = ["web", "framework", "http", "server", "express"]
+categories = ["web-programming::http-server", "network-programming"]
+exclude = ["assets/", ".github/"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[features]
+default = ["json", "form"]
+json = ["dep:serde", "dep:serde_json"]
+form = ["dep:serde", "dep:serde_urlencoded"]
+
+[dependencies]
+bytes = "1.12.1"
+futures-util = "0.3.34"
+http = "1.5.0"
+http-body-util = "0.1.5"
+httpdate = "1.0.3"
+hyper = { version = "1.11.1", features = ["server", "http1"] }
+hyper-util = { version = "0.1.21", features = ["tokio"] }
+serde = { version = "1.0.229", optional = true }
+serde_json = { version = "1.0.151", optional = true }
+serde_urlencoded = { version = "0.7.1", optional = true }
+tokio = { version = "1.53.2", features = ["rt-multi-thread", "net", "macros", "signal", "sync", "time", "fs", "io-util"] }
+
+[dev-dependencies]
+futures-util = "0.3.34"
+serde = { version = "1.0.229", features = ["derive"] }
+tokio = { version = "1.53.2", features = ["io-util", "rt-multi-thread", "macros", "net", "sync"] }
+
+[[example]]
+name = "json"
+required-features = ["json"]
+
+[[example]]
+name = "website"
+required-features = ["form"]
